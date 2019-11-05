@@ -1,11 +1,13 @@
 {
   "name": "bb2-logger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/logger.js",
   "scripts": {
     "tsc": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run tsc && npm run test:pino && npm run test:std",
+    "test:pino": "node dist/test.js",
+    "test:std": "STD_LOGGER=true node dist/test.js"
   },
   "author": "",
   "license": "ISC",
