@@ -1,7 +1,11 @@
 import { Meta, Logger } from "./logger";
 
 function logIt (level: string, message: string, meta? :Meta) {
-    (console as any)[level](message, meta)
+    if (meta) {
+        (console as any)[level](message, meta)
+    } else {
+        (console as any)[level](message)
+    }
 }
 
 export class StdLogger implements Logger {
