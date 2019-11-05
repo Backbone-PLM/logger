@@ -1,36 +1,22 @@
-import * as pino from 'pino'
+import { PinoLogger } from './pino-logger'
+import { StdLogger } from './std-logger'
 
-interface Meta {
+export interface Meta {
     [index: string]: any
 }
-
-class PinoLogger {
-    private logger = pino()
-
-    constructor () {
-        // this.logger.level = LogLevelToPino[logLevel]
-    }
-
-    info (message: string, meta?: Meta) {
-        this.logger.info({ message, meta })
-    }
-
-    debug (message: string, meta?: Meta) {
-        this.logger.debug({ message, meta })
-    }
-
-    warn (message: string, meta?: Meta) {
-        this.logger.warn({ message, meta })
-    }
-
-    error (message: string, meta?: Meta) {
-        this.logger.error({ message, meta })
-    }
-
-    fatal (message: string, meta?: Meta) {
-        this.logger.fatal({ message, meta })
-        process.exit(1)
-    }
+export interface Logger {
+    info (message: string, meta?: Meta): void
+    debug (message: string, meta?: Meta): void
+    warn (message: string, meta?: Meta): void
+    error (message: string, meta?: Meta): void
+    fatal (message: string, meta?: Meta): void
 }
 
-export default new PinoLogger()
+let logger: Logger = new StdLogger()
+
+if (!process.env.STD_LOGGER) {
+    logger = new PinoLogger()
+    logger.info('Using console logger')
+}
+
+export default logger
