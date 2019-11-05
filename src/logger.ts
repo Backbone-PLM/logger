@@ -14,7 +14,7 @@ export interface Logger {
 
 let logger: Logger = new StdLogger()
 
-if (process.env.STD_LOGGER === "true") {
+if (process.env.STD_LOGGER !== "true") {
     logger = new PinoLogger()
 } else {
     logger.info('Using console logger')
